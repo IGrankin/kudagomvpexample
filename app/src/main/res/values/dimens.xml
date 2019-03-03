@@ -1,0 +1,9 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="txt_header">30sp</dimen>
+    <dimen name="txt_event_description_title">20sp</dimen>
+    <dimen name="txt_normal">16sp</dimen>
+    <dimen name="txt_sub_text">14sp</dimen>
+    <dimen name="image_event_card">160dp</dimen>
+    <dimen name="card_margin">8dp</dimen>
+</resources>

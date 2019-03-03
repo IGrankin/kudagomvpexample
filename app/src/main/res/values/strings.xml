@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">KudaGoMVPExample</string>
+    <string name="sample_btn">Нажми меня</string>
+    <string name="title_activity_all_events">AllEventsActivity</string>
+</resources>

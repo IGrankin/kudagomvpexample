@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin"
+        card_view:cardCornerRadius="16dp"
+        card_view:cardElevation="16dp"
+        android:clickable="true"
+        >
+    <LinearLayout android:orientation="vertical"
+                  android:layout_height="wrap_content"
+                  android:layout_width="wrap_content">
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="@dimen/image_event_card"
+                   android:background="@color/colorPrimaryDark"
+                   android:scaleType="centerCrop"
+                   android:src="@drawable/f0df769e2ef1acb5c61a3f8955ba4160"
+        />
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_margin="@dimen/fab_margin"
+        >
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="@dimen/txt_normal"
+                  android:textColor="@color/colorPrimaryDark"
+                  android:textStyle="bold"
+                  android:text="Музыкальный фестиваль LiveFest Summer"
+                  android:textAllCaps="true"
+
+        />
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimaryDark"
+                  android:textSize="@dimen/txt_sub_text"
+                  android:text="Первый фестиваль LiveFest на курорте «Роза Хутор» собрал перспективные музыкальные..."
+                  android:layout_marginTop="8dp"
+                  android:layout_marginBottom="8dp"
+        />
+    <include layout="@layout/content_cardview_event"/>
+    </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
