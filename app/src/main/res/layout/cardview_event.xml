@@ -4,6 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/cardview_event_cell"
         android:layout_margin="@dimen/card_margin"
         card_view:cardCornerRadius="16dp"
         card_view:cardElevation="16dp"
@@ -15,6 +16,7 @@
                   android:layout_width="wrap_content">
         <ImageView android:layout_width="match_parent"
                    android:layout_height="@dimen/image_event_card"
+                   android:id="@+id/card_image_header"
                    android:background="@color/colorPrimaryDark"
                    android:scaleType="centerCrop"
                    android:src="@drawable/f0df769e2ef1acb5c61a3f8955ba4160"
@@ -27,6 +29,7 @@
         >
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:id="@+id/card_txt_header"
                   android:textSize="@dimen/txt_normal"
                   android:textColor="@color/colorPrimaryDark"
                   android:textStyle="bold"
@@ -36,6 +39,7 @@
         />
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:id="@+id/card_txt_description"
                   android:textColor="@color/colorPrimaryDark"
                   android:textSize="@dimen/txt_sub_text"
                   android:text="Первый фестиваль LiveFest на курорте «Роза Хутор» собрал перспективные музыкальные..."
