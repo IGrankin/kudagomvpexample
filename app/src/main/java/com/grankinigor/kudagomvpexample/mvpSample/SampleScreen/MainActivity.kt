@@ -1,4 +1,4 @@
-package com.grankinigor.kudagomvpexample.mvpSample
+package com.grankinigor.kudagomvpexample.mvpSample.SampleScreen
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +8,7 @@ import com.grankinigor.kudagomvpexample.R
 
 class MainActivity : AppCompatActivity(), SampleInterface.View {
 
-    private lateinit var mPresenter:SampleInterface.Presenter
+    private lateinit var mPresenter: SampleInterface.Presenter
     private lateinit var mButton: Button
     private lateinit var mTextView: TextView
 

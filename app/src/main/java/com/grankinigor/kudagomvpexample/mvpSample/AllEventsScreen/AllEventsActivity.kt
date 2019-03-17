@@ -1,5 +1,6 @@
 package com.grankinigor.kudagomvpexample.mvpSample.AllEventsScreen
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.grankinigor.kudagomvpexample.R
 import com.grankinigor.kudagomvpexample.mvpSample.CitiesScreen.ChooseCityActivity
 
 import kotlinx.android.synthetic.main.activity_all_events.*
+import org.w3c.dom.Text
 
 class AllEventsActivity : AppCompatActivity(), EventsView.View {
 
@@ -32,7 +34,8 @@ class AllEventsActivity : AppCompatActivity(), EventsView.View {
         supportActionBar!!.setTitle("")
         val mChooseCityBtn: TextView = findViewById(R.id.choose_city_btn)
         mChooseCityBtn.setOnClickListener {
-            startActivity(Intent(this, ChooseCityActivity::class.java))
+            val intent = Intent(this, ChooseCityActivity::class.java)
+            startActivityForResult(intent, 1)
         }
         mRvEvents = findViewById(R.id.table_events)
 
@@ -41,6 +44,17 @@ class AllEventsActivity : AppCompatActivity(), EventsView.View {
         mRvEvents.setHasFixedSize(true)
 
         mPresenter.loadLastEvents()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                val newCityString = data!!.getStringExtra("city")
+                val btn:TextView = findViewById(R.id.choose_city_btn)
+                btn.text = newCityString
+            }
+        }
     }
 
     override fun showLastEvents(eventsList: ArrayList<EventModel>) {

@@ -1,6 +1,6 @@
-package com.grankinigor.kudagomvpexample.mvpSample
+package com.grankinigor.kudagomvpexample.mvpSample.SampleScreen
 
-class SamplePresenter:SampleInterface.Presenter {
+class SamplePresenter: SampleInterface.Presenter {
 
     private lateinit var mView: SampleInterface.View
     private lateinit var mRepository: SampleInterface.Repository
