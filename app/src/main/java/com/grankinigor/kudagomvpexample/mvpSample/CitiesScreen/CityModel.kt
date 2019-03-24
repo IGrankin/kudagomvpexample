@@ -1,6 +1,8 @@
 package com.grankinigor.kudagomvpexample.mvpSample.CitiesScreen
 
-class CityModel {
+import java.io.Serializable
+
+class CityModel:Serializable {
     var slug: String
     var name: String
 

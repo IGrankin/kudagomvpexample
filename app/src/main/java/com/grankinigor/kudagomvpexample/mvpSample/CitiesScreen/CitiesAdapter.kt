@@ -10,15 +10,22 @@ import com.grankinigor.kudagomvpexample.R
 
 class CitiesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private var mCitiesSourceList: ArrayList<CityModel> = ArrayList()
-    private var lastChoosed: String = ""
+    lateinit var lastChoosedCityModel: CityModel
+    private var mListener: OnCitiesClick? = null
 
-    constructor() {
+    constructor(listener: OnCitiesClick):super() {
+        this.mListener = listener
         mCitiesSourceList.clear()
     }
 
     fun showCities(cities: ArrayList<CityModel>) {
         mCitiesSourceList.clear()
         mCitiesSourceList.addAll(cities)
+        notifyDataSetChanged()
+    }
+
+    fun setNewSelectedCity(cityModel: CityModel) {
+        lastChoosedCityModel = cityModel
         notifyDataSetChanged()
     }
 
@@ -35,7 +42,27 @@ class CitiesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
         if (p0 is CitiesViewHolder) {
             p0.bind(mCitiesSourceList[p1])
+            if (mCitiesSourceList[p1].name == lastChoosedCityModel.name) {
+                mListener?.let {
+                    it.markViewAsAdded(p0.itemView)
+                }
+            } else {
+                mListener?.let {
+                    it.markViewAsRegular(p0.itemView)
+                }
+            }
+            p0.itemView.setOnClickListener {
+                mListener?.let { listener ->
+                    listener.onCityClicked(it, mCitiesSourceList[p1])
+                }
+            }
         }
+    }
+
+    interface OnCitiesClick {
+        fun onCityClicked(itemView: View, cityModel: CityModel)
+        fun markViewAsAdded(itemView: View)
+        fun markViewAsRegular(itemView: View)
     }
 
     class CitiesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

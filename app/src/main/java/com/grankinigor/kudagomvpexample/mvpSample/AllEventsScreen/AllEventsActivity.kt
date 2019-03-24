@@ -11,6 +11,8 @@ import android.util.Log
 import android.widget.TextView
 import com.grankinigor.kudagomvpexample.R
 import com.grankinigor.kudagomvpexample.mvpSample.CitiesScreen.ChooseCityActivity
+import com.grankinigor.kudagomvpexample.mvpSample.CitiesScreen.CityModel
+import com.grankinigor.kudagomvpexample.mvpSample.EventScreen.EventActivity
 
 import kotlinx.android.synthetic.main.activity_all_events.*
 import org.w3c.dom.Text
@@ -20,6 +22,7 @@ class AllEventsActivity : AppCompatActivity(), EventsView.View {
     private lateinit var mRvEvents: RecyclerView
     private lateinit var mRvAdapter: EventsAdapter
     lateinit var mPresenter: EventsPresenter
+    private var choosenCity: CityModel = CityModel("msk", "Москва")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +37,10 @@ class AllEventsActivity : AppCompatActivity(), EventsView.View {
         supportActionBar!!.setTitle("")
         val mChooseCityBtn: TextView = findViewById(R.id.choose_city_btn)
         mChooseCityBtn.setOnClickListener {
-            val intent = Intent(this, ChooseCityActivity::class.java)
-            startActivityForResult(intent, 1)
+//            val intent = Intent(this, ChooseCityActivity::class.java)
+//            intent.putExtra("city", choosenCity)
+//            startActivityForResult(intent, 1)
+            startActivity(Intent(this, EventActivity::class.java))
         }
         mRvEvents = findViewById(R.id.table_events)
 
@@ -50,9 +55,10 @@ class AllEventsActivity : AppCompatActivity(), EventsView.View {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                val newCityString = data!!.getStringExtra("city")
+                val newCity = data!!.getSerializableExtra("city")
+                choosenCity = newCity as CityModel
                 val btn:TextView = findViewById(R.id.choose_city_btn)
-                btn.text = newCityString
+                btn.text = choosenCity.name
             }
         }
     }
@@ -60,4 +66,6 @@ class AllEventsActivity : AppCompatActivity(), EventsView.View {
     override fun showLastEvents(eventsList: ArrayList<EventModel>) {
         mRvAdapter.showLastEvents(eventsList)
     }
+
+
 }
