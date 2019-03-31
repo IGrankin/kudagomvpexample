@@ -7,42 +7,18 @@
         android:layout_height="match_parent"
         tools:context=".mvpSample.EventScreen.EventActivity"
 >
-    <android.support.design.widget.AppBarLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp"
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent"
     >
+    <ImageButton android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_close_button"
+            android:elevation="@dimen/card_margin"
+            android:background="@drawable/back_button_capsule_form"
+            android:layout_margin="16dp"
+                 android:src="@drawable/ic_shape_back"
+    />
 
-        <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@android:color/transparent"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-        >
-            <android.support.v7.widget.CardView android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                                card_view:cardCornerRadius="16dp"
-                                                card_view:cardElevation="16dp"
-            >
-            <ImageView android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/ic_shape_back"
-                       android:background="@color/colorPrimary"
-                       android:paddingHorizontal="@dimen/fab_margin"
-                       android:paddingVertical="@dimen/card_margin"
-                       android:clickable="true"
-                       android:id="@+id/event_close_button"
-
-            />
-
-
-            </android.support.v7.widget.CardView>
-        </android.support.v7.widget.Toolbar>
-
-    </android.support.design.widget.AppBarLayout>
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -50,21 +26,26 @@
                       android:layout_height="wrap_content"
                       android:orientation="vertical"
         >
+            <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
             <android.support.v4.view.ViewPager android:layout_width="match_parent"
                                                android:layout_height="260dp"
                                                android:id="@+id/event_description_view_pager"
             >
-                    <android.support.design.widget.TabLayout android:layout_width="match_parent"
-                                                             android:layout_height="wrap_content"
-                                                             android:id="@+id/event_photo_tab_layout"
-                                                             android:layout_gravity="bottom"
-                                                             app:tabBackground="@drawable/tab_layout_selector"
-                                                             app:tabIndicatorHeight="0dp"
-                                                             app:tabGravity="center"
 
-                    />
             </android.support.v4.view.ViewPager>
+                <android.support.design.widget.TabLayout android:layout_width="match_parent"
+                                                         android:layout_height="wrap_content"
+                                                         android:id="@+id/event_photo_tab_layout"
+                                                         android:layout_gravity="bottom"
+                                                         app:tabBackground="@drawable/tab_layout_selector"
+                                                         app:tabIndicatorHeight="0dp"
+                                                         app:tabGravity="center"
+                                                         app:tabPadding="4dp"
+                                                         app:tabMinWidth="16dp"
 
+
+                />
+            </FrameLayout>
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="match_parent"
                           android:orientation="vertical"
@@ -102,5 +83,6 @@
         </LinearLayout>
 
     </ScrollView>
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
