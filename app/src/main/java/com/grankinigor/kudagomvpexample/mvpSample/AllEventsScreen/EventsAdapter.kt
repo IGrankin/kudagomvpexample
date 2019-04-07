@@ -11,9 +11,11 @@ import com.grankinigor.kudagomvpexample.R
 class EventsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private var mEventsSourceList: ArrayList<EventModel> = ArrayList()
+    private var mListener: OnEventClick? = null
 
-    constructor() {
+    constructor(listener: OnEventClick) {
         mEventsSourceList.clear()
+        mListener = listener
     }
 
     fun showLastEvents(events: ArrayList<EventModel>) {
@@ -44,7 +46,12 @@ class EventsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
         if (p0 is EventsViewHolder) {
-            p0.bind(eventModel = mEventsSourceList[p1-1])
+            p0.bind(eventModel = mEventsSourceList[p1 - 1])
+            p0.itemView.setOnClickListener {
+                mListener?.let { listener ->
+                    listener.onEventClicked()
+                }
+            }
         } else if (p0 is EventsHeaderViewHolder) {
             p0.bind()
         }
@@ -62,6 +69,10 @@ class EventsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
         fun bind() {
 
         }
+    }
+
+    interface OnEventClick {
+        fun onEventClicked()
     }
 
     class EventsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

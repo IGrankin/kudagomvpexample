@@ -17,7 +17,7 @@ import com.grankinigor.kudagomvpexample.mvpSample.EventScreen.EventActivity
 import kotlinx.android.synthetic.main.activity_all_events.*
 import org.w3c.dom.Text
 
-class AllEventsActivity : AppCompatActivity(), EventsView.View {
+class AllEventsActivity : AppCompatActivity(), EventsView.View, EventsAdapter.OnEventClick {
 
     private lateinit var mRvEvents: RecyclerView
     private lateinit var mRvAdapter: EventsAdapter
@@ -31,16 +31,15 @@ class AllEventsActivity : AppCompatActivity(), EventsView.View {
         setSupportActionBar(toolbar)
 
         mPresenter = EventsPresenter(this)
-        mRvAdapter = EventsAdapter()
+        mRvAdapter = EventsAdapter(listener = this)
 
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setTitle("")
         val mChooseCityBtn: TextView = findViewById(R.id.choose_city_btn)
         mChooseCityBtn.setOnClickListener {
-//            val intent = Intent(this, ChooseCityActivity::class.java)
-//            intent.putExtra("city", choosenCity)
-//            startActivityForResult(intent, 1)
-            startActivity(Intent(this, EventActivity::class.java))
+            val intent = Intent(this, ChooseCityActivity::class.java)
+            intent.putExtra("city", choosenCity)
+            startActivityForResult(intent, 1)
         }
         mRvEvents = findViewById(R.id.table_events)
 
@@ -68,4 +67,7 @@ class AllEventsActivity : AppCompatActivity(), EventsView.View {
     }
 
 
+    override fun onEventClicked() {
+        startActivity(Intent(this, EventActivity::class.java))
+    }
 }

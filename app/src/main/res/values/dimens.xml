@@ -6,4 +6,6 @@
     <dimen name="txt_sub_text">14sp</dimen>
     <dimen name="image_event_card">160dp</dimen>
     <dimen name="card_margin">8dp</dimen>
+    <dimen name="indicator_size">8dp</dimen>
+    <dimen name="indicator_margin">8dp</dimen>
 </resources>
