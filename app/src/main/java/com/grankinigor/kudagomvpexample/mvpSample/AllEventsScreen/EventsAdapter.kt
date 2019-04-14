@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.grankinigor.kudagomvpexample.R
+import com.squareup.picasso.Picasso
 
 class EventsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -19,6 +21,7 @@ class EventsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     fun showLastEvents(events: ArrayList<EventModel>) {
+        mEventsSourceList.clear()
         mEventsSourceList.addAll(events)
         notifyDataSetChanged()
     }
@@ -49,7 +52,7 @@ class EventsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
             p0.bind(eventModel = mEventsSourceList[p1 - 1])
             p0.itemView.setOnClickListener {
                 mListener?.let { listener ->
-                    listener.onEventClicked()
+                    listener.onEventClicked(mEventsSourceList[p1 - 1])
                 }
             }
         } else if (p0 is EventsHeaderViewHolder) {
@@ -72,7 +75,7 @@ class EventsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     interface OnEventClick {
-        fun onEventClicked()
+        fun onEventClicked(eventModel: EventModel)
     }
 
     class EventsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -80,16 +83,38 @@ class EventsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private var mHeaderText: TextView = itemView.findViewById(R.id.card_txt_header)
         private var mDescription: TextView = itemView.findViewById(R.id.card_txt_description)
         private var mContentPlace: TextView = itemView.findViewById(R.id.card_content_txt_place)
+        private var mLinearPlace: LinearLayout = itemView.findViewById(R.id.event_place_linear_layout)
         private var mContentDate: TextView = itemView.findViewById(R.id.card_content_txt_date)
+        private var mLinearDate: LinearLayout = itemView.findViewById(R.id.event_date_linear_layout)
         private var mContentPrice: TextView = itemView.findViewById(R.id.card_content_txt_price)
+        private var mLinearPrice: LinearLayout = itemView.findViewById(R.id.event_price_linear_layout)
+        private var mDatePlacePriceLinearLayout: LinearLayout = itemView.findViewById(R.id.time_and_date_linear_layout)
 
         fun bind(eventModel: EventModel) {
-            mHeaderImage.setImageResource(R.drawable.f0df769e2ef1acb5c61a3f8955ba4160)
+            Picasso.get().
+                load(eventModel.imageURL.first()).
+                into(mHeaderImage)
             mHeaderText.text = eventModel.headerText
             mDescription.text = eventModel.description
-            eventModel.place?.let { mContentPlace.text = it }
-            eventModel.date?.let { mContentDate.text = it }
-            eventModel.price?.let { mContentPrice.text = it }
+
+            if (eventModel.place != null) {
+                mContentPlace.text = eventModel.place
+            } else {
+                mDatePlacePriceLinearLayout.removeView(mLinearPlace)
+            }
+
+            if (eventModel.date != null) {
+                mContentDate.text = eventModel.date
+            } else {
+                mDatePlacePriceLinearLayout.removeView(mLinearDate)
+            }
+
+            if (eventModel.price != null && eventModel.price!!.count() > 0) {
+                mContentPrice.text = eventModel.price
+            } else {
+                mDatePlacePriceLinearLayout.removeView(mLinearPrice)
+            }
+
         }
     }
 

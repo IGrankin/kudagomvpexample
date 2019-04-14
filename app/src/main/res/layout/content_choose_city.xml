@@ -9,7 +9,9 @@
         tools:showIn="@layout/activity_choose_city"
         tools:context=".mvpSample.CitiesScreen.ChooseCityActivity">
     <android.support.v4.widget.SwipeRefreshLayout android:layout_width="match_parent"
-                                                  android:layout_height="match_parent">
+                                                  android:layout_height="match_parent"
+                                                  android:id="@+id/city_swipe_refresh"
+    >
 <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:scrollbars="vertical"

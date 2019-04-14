@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
@@ -11,15 +12,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import com.grankinigor.kudagomvpexample.R
+import com.grankinigor.kudagomvpexample.mvpSample.Common.SwipeToRefreshInterface
 
 import kotlinx.android.synthetic.main.activity_choose_city.*
 
-class ChooseCityActivity : AppCompatActivity(), CitiesView.View, CitiesAdapter.OnCitiesClick {
+class ChooseCityActivity : AppCompatActivity(), CitiesView.View, CitiesAdapter.OnCitiesClick, SwipeToRefreshInterface {
 
     private lateinit var mRvCities: RecyclerView
     private lateinit var mRvAdapter: CitiesAdapter
     lateinit var mPresenter: CitiesPresenter
     private lateinit var mCloseButton: ImageView
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,7 @@ class ChooseCityActivity : AppCompatActivity(), CitiesView.View, CitiesAdapter.O
         mRvCities.layoutManager = LinearLayoutManager(this, OrientationHelper.VERTICAL, false)
         mRvCities.setHasFixedSize(true)
 
-        mPresenter.loadCities()
+        mPresenter.loadCities(this)
         mCloseButton = findViewById(R.id.cities_btn_close)
         mCloseButton.setOnClickListener {
             val intent = Intent()
@@ -46,24 +49,18 @@ class ChooseCityActivity : AppCompatActivity(), CitiesView.View, CitiesAdapter.O
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
+
+        mSwipeRefreshLayout = findViewById(R.id.city_swipe_refresh)
+
+        mSwipeRefreshLayout.setOnRefreshListener {
+            mPresenter.loadCities(this)
+        }
     }
 
 
     override fun showCities(citiesArray: ArrayList<CityModel>) {
         mRvAdapter.showCities(citiesArray)
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == 1) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                mRvAdapter.setNewSelectedCity(data!!.getSerializableExtra("name") as CityModel)
-//            }
-//        }
-//    }
-
-    //OnClickListener
-
 
     override fun onCityClicked(itemView: View, cityModel: CityModel) {
         val mark = itemView.findViewById<ImageView>(R.id.city_cell_txt_marked)
@@ -78,5 +75,16 @@ class ChooseCityActivity : AppCompatActivity(), CitiesView.View, CitiesAdapter.O
     override fun markViewAsRegular(itemView: View) {
         val mark = itemView.findViewById<ImageView>(R.id.city_cell_txt_marked)
         mark.visibility = View.INVISIBLE
+    }
+
+    //MARK: - swipe to refresh interface implementation
+
+    override fun startLoading() {
+        mRvCities.visibility = View.INVISIBLE
+    }
+
+    override fun endLoading() {
+        mRvCities.visibility = View.VISIBLE
+        mSwipeRefreshLayout.isRefreshing = false
     }
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.grankinigor.kudagomvpexample.R
+import com.squareup.picasso.Picasso
 
 class EventPhotosAdapter: PagerAdapter() {
 
@@ -31,15 +32,15 @@ class EventPhotosAdapter: PagerAdapter() {
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = buildImageView(container.context, "")
+        val view = buildImageView(container.context, mPhotosList[position])
         container.addView(view)
         return view
     }
 
     private fun buildImageView(context: Context, photoURL: String): View {
-        val imageView:ImageView = ImageView(context)
-        imageView.setImageResource(R.drawable.f0df769e2ef1acb5c61a3f8955ba4160)
+        val imageView: ImageView = ImageView(context)
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        Picasso.get().load(photoURL).into(imageView)
         return imageView
     }
 

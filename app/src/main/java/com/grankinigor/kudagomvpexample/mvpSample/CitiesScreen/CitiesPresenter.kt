@@ -1,5 +1,7 @@
 package com.grankinigor.kudagomvpexample.mvpSample.CitiesScreen
 
+import android.content.Context
+
 class CitiesPresenter: CitiesView.Presenter {
 
     private lateinit var mView: CitiesView.View
@@ -10,9 +12,15 @@ class CitiesPresenter: CitiesView.Presenter {
         this.mRepository = CitiesRepository()
     }
 
-    override fun loadCities() {
-        val citiesArrayList: ArrayList<CityModel> = mRepository.loadCities()
-        mView.showCities(citiesArrayList)
+    override fun loadCities(context: Context) {
+        mView.startLoading()
+        mRepository.loadCities(context, onSuccess = {
+            mView.showCities(it)
+            mView.endLoading()
+        }, onError = {
+            mView.endLoading()
+        })
+
     }
 
     override fun onDestroy() {

@@ -46,6 +46,9 @@ class PagerIndicator @JvmOverloads constructor(
         layoutParams.marginStart = indicatorMargin / 2
         layoutParams.marginEnd = indicatorMargin / 2
         val pageCount = viewPager?.adapter?.count ?: 0
+        if (pageCount < 2) {
+            return
+        }
         (0 until pageCount).forEach { _ ->
             val indicatorView = IndicatorView(context)
             indicatorView.layoutParams = layoutParams
@@ -58,6 +61,8 @@ class PagerIndicator @JvmOverloads constructor(
 
     //MARK: - observer methods
 
+
+    //region test
     private fun registerObserver() {
         if (dataSetObserver != null) {
             return
@@ -75,6 +80,7 @@ class PagerIndicator @JvmOverloads constructor(
             e.printStackTrace()
         }
     }
+    //endregion
 
     private fun unRegisterObserver() {
         if (dataSetObserver == null || viewPager == null || viewPager?.adapter == null) {
